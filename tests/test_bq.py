@@ -1,4 +1,5 @@
 """General plugin tests."""
+
 import pytest
 from google.cloud import bigquery
 
@@ -32,4 +33,4 @@ def test_can_load_test_data_yaml(bqlocal1: bigquery.Client) -> None:
         job_config=bigquery.QueryJobConfig(),
     )
     results = [x.values() for x in job.result()]
-    assert results == [(1, ), (2, )]
+    assert results == [(1,), (2,)]

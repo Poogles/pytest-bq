@@ -1,4 +1,5 @@
 """pytest-bq plugin declaration."""
+
 from shutil import which
 
 from pytest import Parser
@@ -20,9 +21,7 @@ _HELP_DATA_FROM_YAML = "bigquery-emulator configuration to use."
 
 def pytest_addoption(parser: Parser) -> None:
     """Plugin configuration options."""
-    parser.addini(
-        name="bq_executable", help=_HELP_EXEC, default=which("bigquery")
-    )
+    parser.addini(name="bq_executable", help=_HELP_EXEC, default=which("bigquery"))
     parser.addini(name="bq_port", help=_HELP_PORT)
     parser.addini(name="bq_grpc_port", help=_HELP_GRPC_PORT)
     parser.addini(name="bq_loglevel", help=_HELP_LOGLEVEL)
@@ -33,7 +32,9 @@ def pytest_addoption(parser: Parser) -> None:
         "--bq-executable", action="store", dest="bq_executable", help=_HELP_EXEC
     )
     parser.addoption("--bq-port", action="store", dest="bq_port", help=_HELP_PORT)
-    parser.addoption("--bq-grpc-port", action="store", dest="bq_grpc_port", help=_HELP_GRPC_PORT)
+    parser.addoption(
+        "--bq-grpc-port", action="store", dest="bq_grpc_port", help=_HELP_GRPC_PORT
+    )
     parser.addoption(
         "--bq-loglevel", action="store", dest="bq_loglevel", help=_HELP_LOGLEVEL
     )
@@ -41,5 +42,8 @@ def pytest_addoption(parser: Parser) -> None:
         "--bq-project-id", action="store", dest="bq_project_id", help=_HELP_PROJECT_ID
     )
     parser.addoption(
-        "--bq-data-from-yaml", action="store", dest="bq_data_from_yaml", help=_HELP_DATA_FROM_YAML
+        "--bq-data-from-yaml",
+        action="store",
+        dest="bq_data_from_yaml",
+        help=_HELP_DATA_FROM_YAML,
     )

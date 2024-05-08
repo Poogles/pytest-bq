@@ -2,6 +2,7 @@
 
 Starts a local BQ server using the targeted configuration.
 """
+
 from pathlib import Path
 from typing import List, Optional
 
@@ -17,6 +18,7 @@ class BQExecutor(HTTPExecutor):
         project_id: str,
         port: int,
         grpc_port: int,
+        database_file_path: Path,
         data_from_yaml: Optional[str] = None,
         loglevel: Optional[str] = None,
     ) -> None:
@@ -24,8 +26,12 @@ class BQExecutor(HTTPExecutor):
 
         Args:
             executable: executable to call.
-            host: host address fixture will be started on.
-            port: port fixture will listen on.
+            project_id: google project ID to start local emulator with
+            port: api port fixture will listen on.
+            grpc_port: port storage api fixture will listen on.
+
+        Kwargs:
+            database_file_path: bigquery-emulator config file path.
             loglevel: log level passed to `fake-BQ-server` binary.
 
         Returns:
@@ -39,6 +45,8 @@ class BQExecutor(HTTPExecutor):
             str(port),
             "--grpc-port",
             str(grpc_port),
+            "--database",
+            str(database_file_path),
         ]
 
         if loglevel:
@@ -49,12 +57,17 @@ class BQExecutor(HTTPExecutor):
             command.extend(["--data-from-yaml", data_from_yaml])
 
         self._project_id = project_id
+        self._port = port
+        self._grpc_port = grpc_port
         self._starting_command = command
         self.executable = executable
 
         super().__init__(
             # TODO: Figure out why this returns a 500?
-            command, url=f"http://localhost:{port}/bigquery/v2/projects", timeout=5, status="500"
+            command,
+            url=f"http://localhost:{port}/bigquery/v2/projects",
+            timeout=5,
+            status="500",
         )
 
     def start(self) -> "BQExecutor":
@@ -64,5 +77,15 @@ class BQExecutor(HTTPExecutor):
 
     @property
     def project_id(self) -> str:
-        """Return the configured project_id the emulator is running under."""
+        """Configured project_id the emulator is running under."""
         return self._project_id
+
+    @property
+    def bq_api_port(self) -> int:
+        """Configured port the bigquery api emulator is running on."""
+        return self._port
+
+    @property
+    def storage_api_port(self) -> int:
+        """Configured port the storage api is running under."""
+        return self._grpc_port

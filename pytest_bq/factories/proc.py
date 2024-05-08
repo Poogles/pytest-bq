@@ -1,4 +1,6 @@
 """bq process factory."""
+
+import logging
 from pathlib import Path
 from typing import Callable, Generator, Optional
 
@@ -9,6 +11,8 @@ from port_for import get_port
 
 from pytest_bq.config import get_config
 from pytest_bq.executor import BQExecutor
+
+log = logging.getLogger(__name__)
 
 
 def bq_proc(
@@ -47,14 +51,17 @@ def bq_proc(
         bq_project_id = project_id or config["project_id"]
         assert bq_project_id, "Project ID is required."
 
-        bq_port = (
-            get_port(port) if port else get_port(config["port"]) or get_port(None)
-        )
+        bq_port = get_port(port) if port else get_port(config["port"]) or get_port(None)
         assert bq_port, "Unable to find a port available."
         bq_grpc_port = (
-            get_port(grpc_port) if grpc_port else get_port(config["grpc_port"]) or get_port(None)
+            get_port(grpc_port)
+            if grpc_port
+            else get_port(config["grpc_port"]) or get_port(None)
         )
         assert bq_grpc_port, "Unable to find a port available."
+
+        database_file = Path(tmp_path_factory.mktemp("db")) / "sqllite.db"
+        log.debug("Using sqllite db at path %r", database_file)
 
         bq_executor = BQExecutor(
             executable=Path(bq_exec),
@@ -63,6 +70,7 @@ def bq_proc(
             port=bq_port,
             grpc_port=bq_grpc_port,
             loglevel=loglevel or config["loglevel"],
+            database_file_path=database_file,
         )
         with bq_executor:
             yield bq_executor

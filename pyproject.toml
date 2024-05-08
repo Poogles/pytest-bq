@@ -1,6 +1,6 @@
 [project]
 name = "pytest-bq"
-version = "0.0.3"
+version = "0.0.4"
 description = "BigQuery fixtures and fixture factories for Pytest."
 readme = "README.md"
 keywords = ["tests", "pytest", "fixture", "bq"]
