@@ -31,7 +31,7 @@ let
 # Install our dependencies with soruces defined above.
 in
   pkgs.mkShell {
-    name = "projects.ki-ckstart-python";
+    name = "projects.pytest_bq";
 
     buildInputs = [
       google-sdk

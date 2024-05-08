@@ -1,6 +1,6 @@
-## Pytest GCS
+## Pytest BQ
 
-This is a pytest plugin in similar vein to [pytest-postgres](https://github.com/ClearcodeHQ/pytest-postgresql) and [pytest-kafka](https://pypi.org/project/pytest-kafka/).
+This is a pytest plugin in similar vein to [pytest-postgres](https://github.com/ClearcodeHQ/pytest-postgresql) and [pytest-kafka](https://pypi.org/project/pytest-kafka/). It runs a local version of bigquery that you can use throughout your test suite. 
 
 This would have been much more painful without [Mirakuru](https://github.com/ClearcodeHQ/mirakuru)
 and [bigquery-emulator](https://github.com/goccy/bigquery-emulator); this is a simple wrapper around
@@ -68,4 +68,5 @@ pytest tests/
 
 ### TODOs
 
-* Implement the events outputs, `-event.bucket`, `-event.list`, etc.
+* Validate `data_from_yaml` files.
+* Tools for dummy data generation.

@@ -14,8 +14,8 @@ _HELP_LOGLEVEL = (
     "Level for bucket logging. level for logging. Options"
     " same as for logrus: trace, debug, info, warn, error, fatal, and panic"
 )
-_HELP_PROJECT_ID = ""
-_HELP_DATA_FROM_YAML = ""
+_HELP_PROJECT_ID = "Project ID to use."
+_HELP_DATA_FROM_YAML = "bigquery-emulator configuration to use."
 
 
 def pytest_addoption(parser: Parser) -> None:

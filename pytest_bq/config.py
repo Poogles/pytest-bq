@@ -10,9 +10,10 @@ class GcsConfigType(TypedDict):
 
     executable: str
     port: Optional[int]
-    groc_port: Optional[int]
+    grpc_port: Optional[int]
     project_id: str
     loglevel: str
+    data_from_yaml: str
 
 
 def get_config(request: FixtureRequest) -> GcsConfigType:
