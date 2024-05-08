@@ -1,0 +1,46 @@
+[project]
+name = "pytest-bq"
+version = "0.0.1"
+description = "BigQuery fixtures and fixture factories for Pytest."
+readme = "README.md"
+keywords = ["tests", "pytest", "fixture", "bq"]
+license = {file = "LICENSE"}
+authors = [
+    {name = "Sam Pegler", email = "sam@sampegler.co.uk"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Testing",
+    "Framework :: Pytest",
+]
+dependencies = [
+    "pytest >= 6.2",
+    "google-cloud-bigquery",
+    "mirakuru",
+    "port-for",
+]
+requires-python = ">= 3.8"
+
+[project.urls]
+"Source" = "https://github.com/Poogles/pytest-bq"
+"Bug Tracker" = "https://github.com/Poogles/pytest-bq/issues"
+
+[project.entry-points."pytest11"]
+pytest_bq = "pytest_bq.plugin"
+
+
+[project.optional-dependencies]
+test = ["mypy", "pytest-cov", "pydocstyle", "isort"]
